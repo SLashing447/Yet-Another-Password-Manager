@@ -1,15 +1,15 @@
 <div class="wrapper">
   <div class="search">
-    <input placeholder="Search" type="text" />
+    <span class="tag">🔎</span>
+    <input placeholder="Search Anywhere" type="text" />
   </div>
 </div>
 
 <style>
   .wrapper {
-    width: 100%;
-    position: sticky;
-    backdrop-filter: blur(30px);
-    top: 0;
+    padding: 0.5rem;
+
+    width: 15rem;
   }
   input {
     width: 100%;
@@ -23,8 +23,10 @@
   .search {
     border: 2px solid var(--acc2);
     border-radius: 3px;
-    font-size: 18px;
+    font-size: 17px;
     display: flex;
     padding: 0.4rem 1rem;
+    display: flex;
+    gap: 0.5rem;
   }
 </style>

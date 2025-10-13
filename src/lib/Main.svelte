@@ -1,21 +1,57 @@
-<script>
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { routeBack, routes, selected_vault } from "../scripts/utils";
   import Auth from "./Auth.svelte";
   import Card from "./Card.svelte";
+  import CardView from "./CardView.svelte";
+  // import Notes from "./Notes.svelte";
   import Search from "./Search.svelte";
+  import Vaults from "./Vaults.svelte";
+  import VaultView from "./VaultView.svelte";
+  import AddCard from "./AddCard.svelte";
+  // import { writable, type Writable } from "svelte/store";
+
+  function handleKey(e: KeyboardEvent) {
+    if (e.key === "Escape") {
+      routeBack();
+    }
+  }
+
+  onMount(() => {
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  });
+
+  interface Vault {
+    id: string;
+    name: string;
+    dsc: string;
+  }
+  const vaults: Vault[] = [
+    { id: "1", name: "Game Store", dsc: "Gaming Vault" },
+    { id: "2", name: "Photo Locker", dsc: "Store personal photos securely" },
+    { id: "3", name: "Music Box", dsc: "Vault for playlists and tracks" },
+    { id: "4", name: "Dev Hub", dsc: "Vault for code snippets and APIs" },
+    {
+      id: "5",
+      name: "Finance Safe",
+      dsc: "Vault for banking and expense data",
+    },
+  ];
+
+  // function onCardClick
 </script>
 
 <main>
   <div class="wrapper">
     <Search />
-    <div class="page">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-    </div>
+
+    {#if $routes[1] === "add-card"}
+      <AddCard />
+    {:else}
+      <VaultView />
+    {/if}
+    <Vaults {vaults} />
   </div>
 </main>
 
@@ -25,17 +61,13 @@
     height: 100vh;
     justify-content: center;
   }
-  .page {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-    gap: 0.3rem;
-    padding: 1rem 0.2rem ;
-  }
+
   .wrapper {
     padding: 1rem 0.3rem;
     height: 100%;
     position: relative;
-    /* width: 10rem; */
-    /* background-color: red; */
+    display: flex;
+    width: 70rem;
+    /* align-items: center; */
   }
 </style>

@@ -1,11 +1,11 @@
 <script>
-  import Inputs from "./utils/Inputs.svelte";
+
 </script>
 
 <div class="wrapper">
   <div class="card">
     <h3>YPM Manager</h3>
-    <Inputs type={1} />
+
   </div>
 </div>
 
