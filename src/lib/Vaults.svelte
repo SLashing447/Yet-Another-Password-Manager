@@ -121,7 +121,7 @@
     flex: 1;
     /* justify-content: space-between; */
     /* border: 1px solid lime; */
-
+    width: 250px;
     gap: 0.3rem;
     /* width: 100%; */
   }
@@ -130,9 +130,7 @@
     outline: none !important;
     border: none !important;
   }
-  .status.op {
-    opacity: 1;
-  }
+
   .status {
     cursor: pointer;
     opacity: 0;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { routes } from "../scripts/utils";
+  import { path } from "../scripts/utils";
 
   function onRoute(i: number) {
     if (i === 0 && $routes.length > 1)
