@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { routes } from "../scripts/utils";
+  import { path } from "../scripts/utils";
 
   interface props {
     name: string;
