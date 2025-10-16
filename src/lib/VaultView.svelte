@@ -1,6 +1,6 @@
 <script lang="ts">
     import { path, routeTo } from "../scripts/utils";
-    import Card from "./Card.svelte";
+    import Card from "./utils/Card.svelte";
     import CardView from "./CardView.svelte";
     import Router from "./Router.svelte";
 
@@ -93,7 +93,7 @@
         /* display: grid; */
         max-width: 40rem;
         flex: 1;
-         /*border: 1px solid lime; */
+        /*border: 1px solid lime; */
         padding: 0.5rem 0.5rem 0 0.5rem;
         display: flex;
         flex-direction: column;

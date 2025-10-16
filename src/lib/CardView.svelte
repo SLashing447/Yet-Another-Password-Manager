@@ -30,7 +30,7 @@
         </div>
         <div class="box">
             <span style={`width:${toptTimerWidth}%`} class="timer"></span>
-            <h3>TOPT (2FA)</h3>
+            <h3>TOPT</h3>
             <div class="code">
                 <span>3</span>
                 <span>4</span>
@@ -87,7 +87,7 @@
         margin-top: 0.1rem;
     }
     .pass:hover {
-        background-color: rgba(184, 151, 242, 0.150);
+        background-color: rgba(184, 151, 242, 0.15);
     }
     .pass:active {
         scale: 0.9;

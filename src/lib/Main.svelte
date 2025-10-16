@@ -1,21 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { path, routeTo, selected_vault } from "../scripts/utils";
-    import Auth from "./Auth.svelte";
-    import Card from "./Card.svelte";
-    import CardView from "./CardView.svelte";
-    // import Notes from "./Notes.svelte";
+    import { isAuthenticated, path, routeTo } from "../scripts/utils";
     import Search from "./Search.svelte";
     import Vaults from "./Vaults.svelte";
     import VaultView from "./VaultView.svelte";
     import AddCard from "./AddCard.svelte";
-    // import { writable, type Writable } from "svelte/store";
-    // import { invoke } from "@tauri-apps/api/core";
-    // let summary: string = $state("");
-
-    // invoke("note_summary").then((data) => (summary = data as string));
-
-    // console.log("Summary : ", summary);
+    import Auth from "./Auth.svelte";
+    import Store from "./Store.svelte";
 
     function handleKey(e: KeyboardEvent) {
         if (e.key === "Escape") {
@@ -33,21 +24,30 @@
         name: string;
         dsc: string;
     }
-    const vaults: Vault[] = [];
-
-    // function onCardClick
+    const vaults: Vault[] = [
+        {
+            dsc: "Hello world",
+            id: "123ere2wfuihf",
+            name: "Gaming",
+        },
+    ];
 </script>
 
 <main>
     <div class="wrapper">
-        <Search />
+        {#if $isAuthenticated}
+            <Search />
 
-        {#if $path[1] === "add-card"}
-            <AddCard />
+            {#if $path[1] === "add-card"}
+                <AddCard />
+            {:else}
+                <VaultView />
+            {/if}
+            <!-- <Store /> -->
+            <Vaults {vaults} />
         {:else}
-            <VaultView />
+            <Auth />
         {/if}
-        <Vaults {vaults} />
     </div>
 </main>
 

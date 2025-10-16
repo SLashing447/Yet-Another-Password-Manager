@@ -1,6 +1,10 @@
 <script lang="ts">
+    import Operator, { DataType } from "../scripts/API";
+    import type { FormProps, VaultSchema } from "../scripts/types";
     import { selected_vault } from "../scripts/utils";
-    import Card from "./Card.svelte";
+    import Store from "./Store.svelte";
+    import Card from "./utils/Card.svelte";
+    import Form from "./utils/Form.svelte";
 
     interface Vault {
         id: string;
@@ -15,23 +19,69 @@
     let { vaults }: Props = $props();
 
     let unlcoked: number[] = $state([]);
-    let passInp: string = $state("");
-    let passInpField: HTMLInputElement;
 
-    let unlockAtmpt: number = $state(1);
+    let unlockAtmpt: number = $state(-1);
     let createVault: boolean = $state(false);
 
-    // @state name: number = 0;
-    //     <span>{"＋"}</span>
-    // let active: string = $state("");
+    function onCross() {
+        if (unlockAtmpt !== -1) {
+            unlockAtmpt = -1;
+            return;
+        }
+
+        createVault = !createVault;
+    }
+
+    async function onCreateVault(data: VaultSchema) {
+        await Operator.post(DataType.Vault, data);
+    }
+    async function onUnlockVault({ password }: any) {
+        const id = vaults[unlockAtmpt].id;
+        await Operator.unlock(DataType.Vault, password, id);
+    }
+
+    const INPUTS: FormProps[] = [
+        {
+            name: "💾/name",
+            placeholder: "Vault Name",
+            required: true,
+        },
+        {
+            name: "📝/dsc",
+            placeholder: "Description (Optional)",
+        },
+
+        {
+            name: "🔑/Password",
+            placeholder: "Vault Password (Optional)",
+            stMeter: true,
+            type: "pass",
+        },
+        {
+            name: "🔑/Confirm Password",
+            type: "cnfm-pass",
+            placeholder: "Confirm Password (Optional)",
+            required: false,
+        },
+    ];
 </script>
 
 <div class="wrapper">
+    <Store />
     <div class="header">
         <h2>My Vaults</h2>
 
-        <button onclick={() => (createVault = !createVault)} title="add vault">
-            <span class={createVault ? "plus cross" : "plus"}></span>
+        <button
+            onclick={onCross}
+            title={createVault || unlockAtmpt !== -1
+                ? "Go Back"
+                : "Create Vault"}
+        >
+            <span
+                class={createVault || unlockAtmpt !== -1
+                    ? "plus cross"
+                    : "plus"}
+            ></span>
         </button>
     </div>
     <div class="vaults">
@@ -63,59 +113,29 @@
                 {/each}
             {:else}
                 <div class="unlock">
-                    <h3>
-                        <button onclick={() => (unlockAtmpt = -1)}>
-                            ❌
-                        </button>Unclock Vault
-                    </h3>
-                    <div class="lock-inp">
-                        <input type="password" placeholder="Enter Password" />
-                    </div>
+                    <h3>Unclock {vaults[unlockAtmpt].name}</h3>
+                    <Form
+                        inputs={[
+                            {
+                                name: "password",
+                                required: true,
+                                placeholder: "Vault Key",
+                                type: "pass",
+                            },
+                        ]}
+                        onSubmit={onUnlockVault}
+                        SubmitBtn="Unlock"
+                    />
                 </div>
             {/if}
         {:else}
             <div class="create-vault">
                 <h3>Create Vault</h3>
-                <form class="form">
-                    <div class="input">
-                        <span> 💾 </span>
-                        <input
-                            required
-                            name="name"
-                            type="text"
-                            placeholder="Vault Name"
-                        />
-                    </div>
-                    <div class="input">
-                        <span> 📝 </span>
-                        <input
-                            type="text"
-                            name="dsc"
-                            placeholder="Description (Optional)"
-                        />
-                    </div>
-
-                    <div class="input">
-                        <span>🔑</span>
-                        <input
-                            required
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                        />
-                    </div>
-                    <div class="input">
-                        <span>🔑</span>
-                        <input
-                            required
-                            type="password"
-                            placeholder="Confirm Password"
-                        />
-                    </div>
-                    <div class="input btn">
-                        <button>Add</button>
-                    </div>
-                </form>
+                <Form
+                    inputs={INPUTS}
+                    SubmitBtn="Create"
+                    onSubmit={onCreateVault}
+                />
             </div>
         {/if}
     </div>
@@ -126,20 +146,8 @@
         padding: 0.5rem;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        /*gap: 1rem;*/
         min-width: 18rem;
-        /*border: 1px solid red;*/
-        /* justify-content: center; */
-    }
-    input {
-        background-color: transparent !important;
-        outline: none !important;
-        width: 100%;
-        border: none !important;
-    }
-
-    input::placeholder {
-        font-weight: bold;
     }
     .unlock {
         /*border: 1px solid red;*/
@@ -150,14 +158,6 @@
         gap: 1rem;
 
         border-radius: 5px;
-    }
-    .lock-inp {
-        display: flex;
-        gap: 0.5rem;
-        border: 3px solid var(--acc2);
-        border-radius: 5px;
-        width: 100%;
-        padding: 0.3rem 1rem;
     }
 
     .vaults {
@@ -170,9 +170,7 @@
         /* border: 1px solid red; */
         /* height: 100%; */
     }
-    .unlock > h3 > button {
-        cursor: pointer;
-    }
+
     .unlock > h3 {
         display: flex;
         background-color: #482b4861;
@@ -181,6 +179,17 @@
         padding: 0.2rem 1rem;
         gap: 0.5rem;
         /*justify-content: center;*/
+    }
+    .create-vault {
+        /*border: 1px solid red;*/
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .create-vault > h3 {
+        background-color: #482b4861;
+        border-radius: 6px;
+        padding: 0.2rem 1rem;
     }
     .card {
         display: flex;
@@ -200,6 +209,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 0.5rem;
     }
     .header > button:hover {
         background-color: rgba(162, 102, 162, 0.157);
@@ -230,6 +240,10 @@
         /* optional animation */
         transition: transform 0.15s ease;
     }
+    .plus.cross {
+        transform: rotate(45deg);
+        scale: 1.07;
+    }
     .plus::before,
     .plus::after {
         content: "";
@@ -248,40 +262,4 @@
         width: 2px;
         height: 35%;
     } /* vertical bar */
-
-    .create-vault > form {
-        width: 100%;
-    }
-
-    /* make it a cross */
-    .plus.cross {
-        transform: rotate(45deg);
-    }
-    .input.btn > button {
-        cursor: pointer;
-        width: 100%;
-    }
-    .input {
-        display: flex;
-        gap: 0.6rem;
-        /* background-color: ; */
-        box-shadow: inset 0 0px 0 1.4px var(--acc1);
-        padding: 0.2rem 1rem;
-        border-radius: 4px;
-    }
-    .input > input::placeholder {
-        font-weight: bold;
-    }
-
-    .form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 80%;
-        margin: 0.5rem 0;
-        align-self: center;
-        background-color: rgba(87, 70, 113, 0.217);
-        padding: 0.5rem;
-        border-radius: 5px;
-    }
 </style>

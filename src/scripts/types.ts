@@ -8,6 +8,14 @@ export interface CardSchema {
 export interface VaultSchema {
   name: string;
   desc?: string;
-  lastAccesed: number;
-  createdAt: number;
+  last_accesed: number;
+  created_at: number;
+}
+
+export interface FormProps {
+  name: string;
+  type?: "pass" | "txt" | "cnfm-pass";
+  placeholder?: string;
+  required?: boolean;
+  stMeter?: boolean;
 }
