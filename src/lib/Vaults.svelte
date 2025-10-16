@@ -32,8 +32,8 @@
         createVault = !createVault;
     }
 
-    async function onCreateVault(data: VaultSchema) {
-        await Operator.post(DataType.Vault, data);
+    async function onCreateVault(data: VaultSchema["on_create"]) {
+        await Operator.addVault(data);
     }
     async function onUnlockVault({ password }: any) {
         const id = vaults[unlockAtmpt].id;
@@ -47,12 +47,12 @@
             required: true,
         },
         {
-            name: "📝/dsc",
+            name: "📝/desc",
             placeholder: "Description (Optional)",
         },
 
         {
-            name: "🔑/Password",
+            name: "🔑/password",
             placeholder: "Vault Password (Optional)",
             stMeter: true,
             type: "pass",
@@ -148,6 +148,16 @@
         flex-direction: column;
         /*gap: 1rem;*/
         min-width: 18rem;
+    }
+    @media (max-width: 980px) {
+        .wrapper {
+            min-width: 15rem;
+        }
+    }
+    @media (max-width: 860px) {
+        .wrapper {
+            width: 10rem;
+        }
     }
     .unlock {
         /*border: 1px solid red;*/

@@ -6,7 +6,7 @@
     import VaultView from "./VaultView.svelte";
     import AddCard from "./AddCard.svelte";
     import Auth from "./Auth.svelte";
-    import Store from "./Store.svelte";
+    import Titlebar from "./utils/Titlebar.svelte";
 
     function handleKey(e: KeyboardEvent) {
         if (e.key === "Escape") {
@@ -34,6 +34,8 @@
 </script>
 
 <main>
+    <!-- <Titlebar /> -->
+
     <div class="wrapper">
         {#if $isAuthenticated}
             <Search />
@@ -55,6 +57,7 @@
     main {
         display: flex;
         height: 100vh;
+        flex-direction: column;
         justify-content: center;
     }
 
@@ -64,6 +67,14 @@
         position: relative;
         display: flex;
         width: 70rem;
+        align-self: center;
         /* align-items: center; */
+    }
+
+    @media (max-width: 1120px) {
+        .wrapper {
+            width: 100%;
+            /*border: 1px solid red;*/
+        }
     }
 </style>

@@ -1,7 +1,8 @@
 use serde::{Deserialize, Serialize};
+use uuid::Uuid;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct CardSchema {
+pub struct CardOnCreateSchema {
     pub provider: String,
     pub username: Option<String>,
     pub email: Option<String>,
@@ -10,18 +11,29 @@ pub struct CardSchema {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum Data {
-    Card(CardSchema),
-    Vault(VaultSchema),
+pub struct CardAppSchema {
+    pub id: Uuid,
+    pub provider: String,
+    pub username: Option<String>,
+    pub email: Option<String>,
+    pub desc: Option<String>,
+    pub created_at: u64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct VaultSchema {
+pub struct VaultOnCreateSchema {
     pub name: String,
     pub desc: Option<String>,
-    pub email: Option<String>,
-    pub last_accesed: u64,
+    pub password: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct VaultAppSchema {
+    pub id: Uuid,
+    pub name: String,
+    pub desc: Option<String>,
     pub created_at: u64,
+    pub last_accesed: u64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

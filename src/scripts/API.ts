@@ -13,16 +13,18 @@ type DataSchema = {
 class Database {
   constructor() {}
 
-  async post<T extends DataType>(type: T, data: DataSchema[T]) {
-    try {
-      const result = await invoke("post", {
-        data_type: "Card",
-      });
-      console.log("Backend replied:", result);
-    } catch (err) {
-      console.error("Error calling backend:", err);
-    }
+  async addVault(data: VaultSchema["on_create"]) {
+    await invoke("add_vault", {
+      data: data,
+    });
   }
+
+  async addCard(data: CardSchema["on_create"]) {
+    await invoke("add_vault", {
+      data: data,
+    });
+  }
+
   async unlock(type: "db" | "vault", password: string, id?: string) {
     console.log(`Unlocking ${type} with ${password}`);
   }

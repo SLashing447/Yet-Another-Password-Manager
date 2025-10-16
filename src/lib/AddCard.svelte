@@ -5,8 +5,8 @@
     // import Card from "./Card.svelte";
     import Router from "./Router.svelte";
 
-    async function onSubmit(e: any) {
-        await Operator.post(DataType.Card, e as CardSchema);
+    async function onSubmit(e: CardSchema['on_create']) {
+        await Operator.addCard(e);
     }
 
     const INPUTS: FormProps[] = [

@@ -3,6 +3,7 @@
   "productName": "yapm",
   "version": "0.1.0",
   "identifier": "com.tauri.dev",
+
   "build": {
     "frontendDist": "../public",
     "devUrl": "http://localhost:5173",
@@ -13,16 +14,20 @@
     "windows": [
       {
         "title": "Yet Another Password Manager",
-        "width": 800,
-        "height": 600,
+        "width": 1300,
+        "height": 800,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "decorations": false,
+        "theme": "Dark",
+        "center": true
       }
     ],
     "security": {
       "csp": null
     }
   },
+
   "bundle": {
     "active": true,
     "targets": "all",
