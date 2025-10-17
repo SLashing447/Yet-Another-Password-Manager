@@ -14,15 +14,20 @@
     "windows": [
       {
         "title": "Yet Another Password Manager",
-        "width": 1300,
+        "width": 1150,
         "height": 800,
+        "minWidth": 1000,
+        "minHeight": 750,
         "resizable": true,
         "fullscreen": false,
         "decorations": false,
         "theme": "Dark",
-        "center": true
+        "center": true,
+        "backgroundColor": "#00000000",
+        "transparent": true
       }
     ],
+    "withGlobalTauri": true,
     "security": {
       "csp": null
     }

@@ -1,4 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
+import { getCurrentWindow } from "@tauri-apps/api/window";
+
 import type { CardSchema, VaultSchema } from "./types";
 
 export enum DataType {
@@ -11,7 +13,12 @@ type DataSchema = {
 };
 
 class Database {
-  constructor() {}
+  private appWindow;
+
+  constructor() {
+    // const appWindow = getCurrentWindow();
+    this.appWindow = getCurrentWindow();
+  }
 
   async addVault(data: VaultSchema["on_create"]) {
     await invoke("add_vault", {
@@ -33,6 +40,19 @@ class Database {
 
   // this is cached
   async fetchCardDetails(id: string, vault_id: string) {}
+
+  async closeWindow() {
+    await this.appWindow.close();
+  }
+  async minimizeWindow() {
+    await this.appWindow.minimize();
+  }
+  async maximizeWindow() {
+    await this.appWindow.maximize();
+  }
+  async unmaximizeWindow() {
+    await this.appWindow.unmaximize();
+  }
 }
 
 const Operator = new Database();

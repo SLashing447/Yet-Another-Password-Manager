@@ -35,13 +35,18 @@
 
 <style>
     .wrapper {
-        /*height: 100%;*/
-        width: 100%;
+        height: 100%;
+        width: fit-content;
         display: flex;
+        align-self: center;
         /*justify-content: center;*/
         align-items: center;
+        justify-content: space-between;
         flex-direction: column;
-        gap: 1rem;
+        /*gap: 1rem;*/
+        padding: 0.2rem 0;
+        
+        /*border: 1px solid red;*/
     }
     .body {
         flex: 1;

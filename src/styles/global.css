@@ -18,8 +18,15 @@
 }
 body,
 html {
+    /*background-color: rgba(0,0,0,0.4);*/
+    /*backdrop-filter: blur(10px);*/
+    /*filter: blur(30px);*/
     background-color: var(--bg);
     height: 100vh;
+    border-radius: 9px;
+    /*box-shadow: 0 0 30px red;*/
+    /*margin: 1rem;*/
+    /*box-sizing: border-box;*/
 }
 html {
     color-scheme: dark;

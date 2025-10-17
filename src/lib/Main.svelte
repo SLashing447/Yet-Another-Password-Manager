@@ -1,12 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { isAuthenticated, path, routeTo } from "../scripts/utils";
-    import Search from "./Search.svelte";
     import Vaults from "./Vaults.svelte";
     import VaultView from "./VaultView.svelte";
     import AddCard from "./AddCard.svelte";
     import Auth from "./Auth.svelte";
     import Titlebar from "./utils/Titlebar.svelte";
+    import Dashboard from "./Dash/Dashboard.svelte";
 
     function handleKey(e: KeyboardEvent) {
         if (e.key === "Escape") {
@@ -34,11 +34,12 @@
 </script>
 
 <main>
-    <!-- <Titlebar /> -->
+    <Titlebar />
 
-    <div class="wrapper">
-        {#if $isAuthenticated}
-            <Search />
+    {#if $isAuthenticated}
+        <div class="wrapper">
+            <!-- <Search /> -->
+            <Dashboard />
 
             {#if $path[1] === "add-card"}
                 <AddCard />
@@ -47,10 +48,10 @@
             {/if}
             <!-- <Store /> -->
             <Vaults {vaults} />
-        {:else}
-            <Auth />
-        {/if}
-    </div>
+        </div>
+    {:else}
+        <Auth />
+    {/if}
 </main>
 
 <style>
