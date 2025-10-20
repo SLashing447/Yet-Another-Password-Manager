@@ -39,7 +39,7 @@
     data-tauri-drag-region={true}
     class={`titlebar ${$isAuthenticated ? "" : "auth"}`}
 >
-    <div class="title">
+    <div class="title" title="Yet Another Password Manager">
         <span>YAPM</span>
     </div>
     {#if $isAuthenticated}

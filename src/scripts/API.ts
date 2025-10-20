@@ -1,5 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import msgpack from "@msgpack/msgpack";
 
 import type { CardSchema, VaultSchema } from "./types";
 
@@ -21,8 +22,14 @@ class Database {
   }
 
   async addVault(data: VaultSchema["on_create"]) {
+    const binary: Uint8Array = msgpack.encode({
+      ...(data.desc && { desc: data.desc }),
+    });
+
     await invoke("add_vault", {
-      data: data,
+      name: data.name,
+      bin: binary,
+      password: data.password,
     });
   }
 
