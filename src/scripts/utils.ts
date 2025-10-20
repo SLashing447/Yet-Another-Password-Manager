@@ -1,6 +1,6 @@
 import { get, writable, type Writable } from "svelte/store";
 
-export const selected_vault: Writable<string> = writable("0");
+export const selected_vault: Writable<number> = writable(0);
 export const isAuthenticated: Writable<boolean> = writable(true);
 
 export const path: Writable<string[]> = writable(["connections"]);
@@ -26,6 +26,11 @@ export function routeTo(name: string, override?: boolean) {
   }
 }
 
+export function getUnixTime(): number {
+  const unixTimeSeconds = Math.floor(Date.now() / 1000);
+  return unixTimeSeconds;
+}
+
 export type PasswordStrength = {
   score: number; // 0–10
   color: string;
@@ -47,7 +52,7 @@ export function evaluatePassword(password: string): PasswordStrength {
   const hasNumber = /\d/.test(password);
   const hasSymbol = /[^A-Za-z0-9]/.test(password);
   const diversity = [hasLower, hasUpper, hasNumber, hasSymbol].filter(
-    Boolean,
+    Boolean
   ).length;
   score += diversity * 1.5; // up to 6 points total combined w/ length
 

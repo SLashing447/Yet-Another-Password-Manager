@@ -11,4 +11,8 @@ const app = mount(App, {
   target: document.getElementById("app")!,
 });
 
+["dragstart", "drop", "dragover"].forEach((e) =>
+  window.addEventListener(e, (ev) => ev.preventDefault())
+);
+
 export default app;

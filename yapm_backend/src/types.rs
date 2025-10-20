@@ -1,5 +1,7 @@
+use serde::{Deserialize, Serialize};
+
 // vault data
-#[derive(Debug)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Vault {
     pub id: Option<i64>,
     pub name: String,
@@ -10,7 +12,7 @@ pub struct Vault {
 }
 
 // this is what u sent to front-end
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Card {
     pub id: Option<i64>,
     pub vault_id: i64,
@@ -19,7 +21,7 @@ pub struct Card {
 }
 
 // this is what u decrypt with password on unlock vault
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct VaultMd {
     pub id: i64,
     pub vault_id: i64,

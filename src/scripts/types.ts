@@ -1,42 +1,35 @@
-// export interface CardSchema {
-//   id: string; // uuid
-//   provider: string;
-//   username?: string;
-//   email?: string;
-//   desc?: string;
-//   password: string;
-// }
+export interface VaultMd {
+  id: number;
+  vault_id: number;
+  data: Uint8Array | Blob | ArrayBuffer;
+}
 
 export type CardSchema = {
-  ["on_create"]: {
-    provider: string;
-    desc?: string;
-    email?: string;
-    password: string;
-  };
   ["App"]: {
-    id: string; // uuid
+    id?: number; // uuid
+    vaultid: number;
     provider: string;
     username?: string;
     email?: string;
     desc?: string;
     created_at: number;
   };
+  ["Form"]: {
+    provider: string;
+    username?: string;
+    email?: string;
+    desc?: string;
+    password: string;
+  };
 };
 
 export type VaultSchema = {
-  ["on_create"]: {
-    name: string;
-    desc?: string;
-    password?: string;
-  };
-  ["App"]: {
-    id?: string; //uuid
-    name: string;
-    desc?: string;
-    last_accesed?: number;
-    created_at?: number;
-  };
+  id?: number; //uuid
+  name: string;
+  desc?: string;
+  created_at: number;
+  last_accesed: number;
+  img?: Uint8Array | Blob | ArrayBuffer;
 };
 
 // export interface VaultSchema {}
